@@ -1,0 +1,56 @@
+{
+  "openapi":"3.0.2",
+  "info": {
+    "title":"Blog API",
+    "version":"1.0"
+  },
+  "servers": [
+    {"url":"http://localhost:3000"}
+  ],
+  "paths": {
+    "/posts": {
+      "get": {
+        "description": "Get list of posts",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "List of posts",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "posts": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "example": "asasasasas"
+                          },
+                          "title": {
+                            "type": "string",
+                            "example": "Pealkiri"
+                          },
+                          "content": {
+                            "type": "string",
+                            "example": "Postituse sisu"
+                          },
+                          "author": {
+                            "type": "string",
+                            "example": "Autor"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
