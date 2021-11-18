@@ -4,7 +4,8 @@ import { Post, NewPost } from './interfaces';
 
 // Get posts controller
 const getAllPosts = (req: Request, res: Response) => {
-  const posts: Post[] = postsService.getAllPosts();
+  const { id } = res.locals.user;
+  const posts: Post[] = postsService.getAllPosts(id);
   return res.status(200).json({
     posts,
   });

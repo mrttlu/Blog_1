@@ -12,7 +12,13 @@ const db: Db = {
       id: 'qwert',
       title: 'Esimene postitus',
       content: 'Tähtis postitus',
-      author: 'Mrt',
+      author: 'F0t2GWfMDWE-ooTgMmfKY',
+    },
+    {
+      id: 'asas',
+      title: 'Esimene postitus',
+      content: 'Tähtis postitus',
+      author: 'F0t2GWfMDWE-ooTgMmfKY',
     },
     {
       id: 'asdf',

@@ -3,9 +3,10 @@ import db from '../../db';
 import { Post, NewPost } from './interfaces';
 
 const postsService = {
-  getAllPosts: () => {
+  getAllPosts: (id: string) => {
     const { posts } = db;
-    return posts;
+    const usersPosts = posts.filter((post) => post.author === id);
+    return usersPosts;
   },
   getPostById: (id: string): Post | undefined => {
     const post: Post | undefined = db.posts.find((element: Post) => element.id === id);
