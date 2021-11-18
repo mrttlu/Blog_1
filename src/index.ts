@@ -5,6 +5,9 @@ import openapi from './openapi.json';
 import loggerMiddleware from './components/general/middlewares';
 import postsRouter from './components/posts/routes';
 import pingRouter from './components/ping/routes';
+import usersRouter from './components/users/routes';
+
+import { login } from './components/users/controller';
 
 const app: Application = express();
 
@@ -18,6 +21,10 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openapi));
 app.use('/ping', pingRouter);
 // Register posts routes
 app.use('/posts', postsRouter);
+// Register users routes
+app.use('/users', usersRouter);
+
+app.post('/login', login);
 
 app.listen(port, () => {
   console.log(`Server is running on port: ${port}`);
