@@ -1,10 +1,10 @@
-interface NewUser {
+interface iNewUser {
   email: string;
   password: string;
 }
 
-interface User extends NewUser {
+interface iUser extends iNewUser {
   id: string;
 }
 
-export { NewUser, User };
+export { iNewUser, iUser };

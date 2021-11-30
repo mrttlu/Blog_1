@@ -1,11 +1,11 @@
 import jwt from 'jsonwebtoken';
-import { User } from '../../users/interfaces';
+import { iUser } from '../../users/interfaces';
 import config from '../../../config';
 
 const jwtService = {
-  sign: async (user: User):Promise<string> => {
+  sign: async (user: iUser):Promise<string> => {
     const payload = {
-      id: user.id,
+      user,
     };
     const token = await jwt.sign(payload, config.jwtSecret, { expiresIn: '1h' });
     return token;

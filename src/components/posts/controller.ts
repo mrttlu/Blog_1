@@ -1,20 +1,20 @@
 import { Request, Response } from 'express';
 import postsService from './service';
-import { Post, NewPost } from './interfaces';
+import { iNewPost } from './interfaces';
 
 // Get posts controller
-const getAllPosts = (req: Request, res: Response) => {
-  const { id } = res.locals.user;
-  const posts: Post[] = postsService.getAllPosts(id);
+const getAllPosts = async (req: Request, res: Response) => {
+  const { user } = res.locals.user;
+  const posts = await postsService.getAllPosts(user);
   return res.status(200).json({
     posts,
   });
 };
 
 // Get post by id controller
-const getPostById = (req: Request, res: Response) => {
+const getPostById = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const post = postsService.getPostById(id);
+  const post = await postsService.getPostById(id);
   if (!post) {
     return res.status(400).json({
       messsage: `No post exists with id: ${id}`,
@@ -26,16 +26,17 @@ const getPostById = (req: Request, res: Response) => {
 };
 
 // Create post controller
-const createPost = (req: Request, res: Response) => {
-  const { title, content, author } = req.body;
-  const newPost: NewPost = {
+const createPost = async (req: Request, res: Response) => {
+  const { title, content } = req.body;
+  const { user } = res.locals.user;
+  const newPost = {
     title,
     content,
-    author,
+    author: user,
   };
-  const id: string = postsService.createPost(newPost);
+  const postId: string = await postsService.createPost(newPost);
   return res.status(200).json({
-    id,
+    id: postId,
   });
 };
 

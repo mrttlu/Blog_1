@@ -1,11 +1,11 @@
-interface NewPost {
+interface iNewPost {
   title: string;
   content: string;
-  author: string;
+  authorId: string;
 }
 
-interface Post extends NewPost {
+interface iPost extends iNewPost {
   id: string;
 }
 
-export { Post, NewPost };
+export { iPost, iNewPost };

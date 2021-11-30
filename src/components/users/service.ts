@@ -1,26 +1,36 @@
-import { nanoid } from 'nanoid';
-import db from '../../db';
+import { getConnection } from 'typeorm';
 import hashService from '../general/services/hashService';
-import { NewUser, User } from './interfaces';
+import { iNewUser, iUser } from './interfaces';
+import User from './entity';
+
+const connection = getConnection();
 
 const usersService = {
-  createUser: async (newUser: NewUser):Promise<string> => {
-    const id = nanoid();
-    const hashedPassword = await hashService.hash(newUser.password);
-    const user: User = {
-      id,
-      ...newUser,
-      password: hashedPassword,
-    };
-    db.users.push(user);
-    return id;
+  createUser: async (newUser: iNewUser): Promise<string | boolean> => {
+    try {
+      const hashedPassword = await hashService.hash(newUser.password);
+      const user = {
+        ...newUser,
+        password: hashedPassword,
+      };
+      const result = await connection.getRepository(User).save(user);
+      return result.id;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
   },
-  getUsers: (): User[] => {
-    const { users } = db;
+  getUsers: async () => {
+    const users = await connection.getRepository(User).find();
     return users;
   },
-  getUserByEmail: (email: string):User | undefined => {
-    const user = db.users.find((element) => element.email === email);
+  getUserByEmail: async (email: string): Promise<iUser | undefined> => {
+    const user: iUser | undefined = await connection
+      .getRepository(User)
+      .createQueryBuilder()
+      .addSelect('User.password')
+      .where({ email })
+      .getOne();
     return user;
   },
 };

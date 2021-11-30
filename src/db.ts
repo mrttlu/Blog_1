@@ -1,30 +1,30 @@
-import { Post } from './components/posts/interfaces';
-import { User } from './components/users/interfaces';
+import { iPost } from './components/posts/interfaces';
+import { iUser } from './components/users/interfaces';
 
-interface Db {
-  posts: Post[];
-  users: User[];
+interface iDb {
+  posts: iPost[];
+  users: iUser[];
 }
 
-const db: Db = {
+const db: iDb = {
   posts: [
     {
       id: 'qwert',
       title: 'Esimene postitus',
       content: 'Tähtis postitus',
-      author: 'F0t2GWfMDWE-ooTgMmfKY',
+      authorId: 'F0t2GWfMDWE-ooTgMmfKY',
     },
     {
       id: 'asas',
       title: 'Esimene postitus',
       content: 'Tähtis postitus',
-      author: 'F0t2GWfMDWE-ooTgMmfKY',
+      authorId: 'F0t2GWfMDWE-ooTgMmfKY',
     },
     {
       id: 'asdf',
       title: 'Teine postitus',
       content: 'Vähemtähtis postitus',
-      author: 'Mrt',
+      authorId: 'f989aa95-592e-41f6-ad8e-a89085300e33',
     },
   ],
   users: [

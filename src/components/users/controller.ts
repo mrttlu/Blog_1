@@ -1,13 +1,13 @@
 import { Request, Response } from 'express';
 import hashService from '../general/services/hashService';
 import jwtService from '../general/services/jwtService';
-import { NewUser } from './interfaces';
+import { iNewUser } from './interfaces';
 import usersService from './service';
 
 // Create user controller
 const createUser = async (req: Request, res: Response) => {
   const { email, password } = req.body;
-  const newUser: NewUser = {
+  const newUser: iNewUser = {
     email,
     password,
   };
@@ -17,8 +17,8 @@ const createUser = async (req: Request, res: Response) => {
   });
 };
 
-const getUsers = (req: Request, res: Response) => {
-  const users = usersService.getUsers();
+const getUsers = async (req: Request, res: Response) => {
+  const users = await usersService.getUsers();
   return res.status(200).json({
     users,
   });
@@ -26,7 +26,7 @@ const getUsers = (req: Request, res: Response) => {
 
 const login = async (req: Request, res: Response) => {
   const { email, password } = req.body;
-  const user = usersService.getUserByEmail(email);
+  const user = await usersService.getUserByEmail(email);
   if (!user) {
     return res.status(404).json({
       error: 'User not found',

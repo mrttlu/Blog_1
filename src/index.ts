@@ -1,6 +1,7 @@
 import express, { Application } from 'express';
 import swaggerUi from 'swagger-ui-express';
 import openapi from './openapi.json';
+import './database';
 
 import loggerMiddleware from './components/general/middlewares/middlewares';
 import postsRouter from './components/posts/routes';
