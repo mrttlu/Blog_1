@@ -1,11 +1,13 @@
-interface NewPost {
+import { RowDataPacket } from 'mysql2';
+
+interface INewPost {
   title: string;
   content: string;
-  author: string;
+  usersId: number;
 }
 
-interface Post extends NewPost {
-  id: string;
+interface IPost extends INewPost, RowDataPacket {
+  id: number;
 }
 
-export { Post, NewPost };
+export { IPost, INewPost };

@@ -1,5 +1,11 @@
 const config = {
-  jwtSecret: 'parool',
+  jwtSecret: 'jwtsecret',
+  db: {
+    host: 'localhost',
+    user: 'root',
+    password: 'testpassword',
+    database: 'blog',
+  },
 };
 
 export default config;

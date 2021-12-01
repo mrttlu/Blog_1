@@ -1,28 +1,43 @@
-import { nanoid } from 'nanoid';
-import db from '../../db';
-import { Post, NewPost } from './interfaces';
+import { FieldPacket, ResultSetHeader } from 'mysql2';
+import pool from '../../database';
+import { IPost, INewPost } from './interfaces';
 
 const postsService = {
-  getAllPosts: (id: string) => {
-    const { posts } = db;
-    const usersPosts = posts.filter((post) => post.author === id);
-    return usersPosts;
+  getAllPosts: async (): Promise<IPost[] | false> => {
+    try {
+      const [posts]: [IPost[], FieldPacket[]] = await pool.query(`
+      SELECT P.id, P.title, P.content, P.dateCreated, P.dateUpdated, U.email
+        FROM posts P
+        INNER JOIN users U on P.usersId = U.id
+        WHERE P.dateDeleted IS NULL;`);
+      return posts;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
   },
-  getPostById: (id: string): Post | undefined => {
-    const post: Post | undefined = db.posts.find((element: Post) => element.id === id);
-    return post;
+  getPostById: async (id: string): Promise<IPost | false> => {
+    try {
+      const [posts]: [IPost[], FieldPacket[]] = await pool.query(`
+      SELECT P.id, P.title, P.content, P.dateCreated, P.dateUpdated, U.email
+        FROM posts P
+        INNER JOIN users U on P.usersId = U.id
+        WHERE P.id = ? AND P.dateDeleted IS NULL;
+      `, [id]);
+      return posts[0];
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
   },
-  createPost: (newPost: NewPost): string => {
-    const { title, content, author } = newPost;
-    const id = nanoid();
-    const post: Post = {
-      id,
-      title,
-      content,
-      author,
-    };
-    db.posts.push(post);
-    return id;
+  createPost: async (newPost: INewPost): Promise<number | false> => {
+    try {
+      const [result]: [ResultSetHeader, FieldPacket[]] = await pool.query('INSERT INTO posts SET ?;', [newPost]);
+      return result.insertId;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
   },
 };
 

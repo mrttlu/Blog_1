@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import express, { Application } from 'express';
 import swaggerUi from 'swagger-ui-express';
 import openapi from './openapi.json';
