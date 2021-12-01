@@ -1,5 +1,5 @@
 {
-  "openapi":"3.0.2",
+  "openapi":"3.0.3",
   "info": {
     "title":"Blog API",
     "version":"1.0"
@@ -7,42 +7,116 @@
   "servers": [
     {"url":"http://localhost:3000"}
   ],
+  "components": {
+    "schemas": {
+      "id": {
+        "type": "number",
+        "example": 1
+      },
+      "email": {
+        "type": "string",
+        "example": "juku@juurikas.ee"
+      },
+      "title": {
+        "type": "string",
+        "example": "Pealkiri"
+      },
+      "content": {
+        "type": "string",
+        "example": "Sisu"
+      },
+      "date": {
+        "type": "string",
+        "example": "2021-12-01T09:14:34.000Z"
+      },
+      "users": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "$ref": "#/components/schemas/id"
+            },
+            "email": {
+              "$ref": "#/components/schemas/email"
+            },
+            "dateCreated": {
+              "$ref": "#/components/schemas/date"
+            },
+            "dateUpdated": {
+              "$ref": "#/components/schemas/date"
+            }
+          }
+        }
+      },
+      "posts": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "$ref": "#/components/schemas/id"
+            },
+            "title": {
+              "$ref": "#/components/schemas/title"
+            },
+            "content": {
+              "$ref": "#/components/schemas/content"
+            },
+            "dateCreated": {
+              "$ref": "#/components/schemas/date"
+            },
+            "dateUpdated": {
+              "$ref": "#/components/schemas/date"
+            },
+            "email": {
+              "$ref": "#/components/schemas/email"
+            }
+          }
+        }
+      }
+    }
+  },
   "paths": {
-    "/posts": {
+    "/users": {
       "get": {
-        "description": "Get list of posts",
+        "description": "All users",
         "parameters": [],
         "responses": {
           "200": {
-            "description": "List of posts",
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "users": {
+                     "type": "array",
+                     "$ref": "#/components/schemas/users"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/posts": {
+      "get": {
+        "description": "All posts",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
                     "posts": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "id": {
-                            "type": "string",
-                            "example": "asasasasas"
-                          },
-                          "title": {
-                            "type": "string",
-                            "example": "Pealkiri"
-                          },
-                          "content": {
-                            "type": "string",
-                            "example": "Postituse sisu"
-                          },
-                          "author": {
-                            "type": "string",
-                            "example": "Autor"
-                          }
-                        }
-                      }
+                     "type": "array",
+                     "$ref": "#/components/schemas/posts"
                     }
                   }
                 }

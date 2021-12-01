@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import express, { Application } from 'express';
 import swaggerUi from 'swagger-ui-express';
+import cors from 'cors';
 import openapi from './openapi.json';
 
 import loggerMiddleware from './components/general/middlewares/middlewares';
@@ -15,6 +16,7 @@ const app: Application = express();
 
 const port: number = 3000;
 
+app.use(cors());
 app.use(express.json());
 app.use(loggerMiddleware);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openapi));

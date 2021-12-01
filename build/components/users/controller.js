@@ -24,6 +24,11 @@ const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         password,
     };
     const id = yield service_1.default.createUser(newUser);
+    if (!id) {
+        return res.status(500).json({
+            error: 'Something happened maybe user already exists',
+        });
+    }
     return res.status(200).json({
         id,
     });
@@ -38,7 +43,7 @@ const getUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 exports.getUsers = getUsers;
 const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { email, password } = req.body;
-    const user = service_1.default.getUserByEmail(email);
+    const user = yield service_1.default.getUserByEmail(email);
     if (!user) {
         return res.status(404).json({
             error: 'User not found',

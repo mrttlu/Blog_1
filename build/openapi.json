@@ -1,45 +1,44 @@
 {
-    "openapi": "3.0.2",
+    "openapi": "3.0.3",
     "info": {
         "title": "Blog API",
         "version": "1.0"
     },
     "servers": [
-        { "url": "http://localhost:3000" }
+        { "url": "https://localhost:3000" }
     ],
     "paths": {
-        "/posts": {
+        "/users": {
             "get": {
-                "description": "Get list of posts",
+                "description": "All users",
                 "parameters": [],
                 "responses": {
                     "200": {
-                        "description": "List of posts",
+                        "description": "OK",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "properties": {
-                                        "posts": {
-                                            "type": "array",
-                                            "items": {
-                                                "type": "object",
-                                                "properties": {
-                                                    "id": {
-                                                        "type": "string",
-                                                        "example": "asasasasas"
-                                                    },
-                                                    "title": {
-                                                        "type": "string",
-                                                        "example": "Pealkiri"
-                                                    },
-                                                    "content": {
-                                                        "type": "string",
-                                                        "example": "Postituse sisu"
-                                                    },
-                                                    "author": {
-                                                        "type": "string",
-                                                        "example": "Autor"
+                                    "items": {
+                                        "properties": {
+                                            "users": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "number",
+                                                            "example": 1
+                                                        },
+                                                        "email": {
+                                                            "type": "string"
+                                                        },
+                                                        "dateCreated": {
+                                                            "type": "string"
+                                                        },
+                                                        "dateUpdated": {
+                                                            "type": "string"
+                                                        }
                                                     }
                                                 }
                                             }
